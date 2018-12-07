@@ -7,8 +7,6 @@ var spotify = new Spotify(keys.spotify);
 
 var userInput = process.argv.slice(3).join(" ");
 
-// var spotifyURL = 
-
 // ---------------------------------------------------------------------
 
 if (process.argv[2] === "concert-this") {
