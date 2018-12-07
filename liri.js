@@ -5,42 +5,45 @@ var fs = require("fs");
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify(keys.spotify);
 
-var argument = process.argv;
-
-for (var i = 2; i < argument.length; i++) {
-
-    if (i > 2 && i < argument.length) {
-        movieName = movieName + "+" + argument[i];
-    }
-    else {
-        movieName += argument[i];
-
-    }
-}
-
-var movieName = "";
-var artistName = "";
-var songName = "";
-
-
+var userInput = process.argv.slice(3).join(" ");
 
 // var spotifyURL = 
-
-// change to [3] after implimenting movie-this
 
 // ---------------------------------------------------------------------
 
 if (process.argv[2] === "concert-this") {
-    var bandURL = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp";
+    console.log(userInput);
+    var bandURL = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp";
+    console.log(bandURL);
+    axios
+    .get(bandURL)
+    .then(function (response) {
+        console.log(response.data);
+        // console.log("Venue: " + response.data);
+        // console.log("Location: " + response.data);
+        // console.log("Date: " + response.data);
 
+    })
+    .catch(function (error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        } else if (error.request) {
+            console.log(error.request);
+        } else {
+            console.log("Error", error.message);
+        }
+        console.log(error.config);
+    });
 }
 // ---------------------------------------------------------------------
 
 if (process.argv[2] === "movie-this") {
-    if (!process.argv[3]) {
-        movieName = "Mr.+Nobody";
+    if (!userInput) {
+        userInput = "Mr.+Nobody";
     }
-    var movieURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    var movieURL = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
     axios
     .get(movieURL)
     .then(function (response) {
@@ -79,7 +82,7 @@ if (process.argv[2] === "movie-this") {
 // ---------------------------------------------------------------------
 
 if (process.argv[2] === "spotify-this-song") {
-    spotify.search({ type: 'track', query: 'Ophelia', limit: 5}, function(err, data) {
+    spotify.search({ type: 'track', query: songName, limit: 5}, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }   
