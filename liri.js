@@ -1,35 +1,53 @@
 require("dotenv").config();
 var axios = require("axios");
 var fs = require("fs");
+// var Spotify = require('node-spotify-api');
 // var spotify = new Spotify(keys.spotify);
 
 var nodeArgs = process.argv;
 
 movieName = "";
+artistName = "";
+songName = "";
+
 // change to [3] after implimenting movie-this
-if(!process.argv[3]) {
+if (!process.argv[3]) {
     movieName = "Mr.+Nobody";
 }
-if(!process.argv[2] === "concert-this") {
-    
+if (process.argv[2] === "concert-this") {
+
+}
+
+if (process.argv[2] === "movie-this") {
+
+}
+
+if (process.argv[2] === "spotify-this-song") {
+
+}
+
+if (process.argv[2] === "do-what-it-says") {
+
 }
 
 for (var i = 2; i < nodeArgs.length; i++) {
 
     if (i > 2 && i < nodeArgs.length) {
-      movieName = movieName + "+" + nodeArgs[i];
+        movieName = movieName + "+" + nodeArgs[i];
     }
     else {
-      movieName += nodeArgs[i];
-  
-    }
-  }
+        movieName += nodeArgs[i];
 
-var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    }
+}
+
+var movieURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+var bandURL = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp";
+var spotifyURL = 
 
 axios
-    .get(queryUrl)
-    .then(function(response) {
+    .get(movieURL)
+    .then(function (response) {
         // console.log(response.data);
         console.log("Title: " + response.data.Title);
         console.log("Year: " + response.data.Year);
@@ -39,17 +57,26 @@ axios
         console.log("Language: " + response.data.Language);
         console.log("Plot: " + response.data.Plot);
         console.log("Actors: " + response.data.Actors);
-        
+
     })
-    .catch(function(error) {
+    .catch(function (error) {
         if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
         } else if (error.request) {
-          console.log(error.request);
+            console.log(error.request);
         } else {
-          console.log("Error", error.message);
+            console.log("Error", error.message);
         }
         console.log(error.config);
-      });
+    });
+
+
+spotify.search({ type: 'track', query: 'Ophelia' }, function(err, data) {
+    if (err) {
+        return console.log('Error occurred: ' + err);
+    }
+       
+    console.log(data); 
+    });
