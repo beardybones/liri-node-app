@@ -4,7 +4,18 @@ var fs = require("fs");
 // var Spotify = require('node-spotify-api');
 // var spotify = new Spotify(keys.spotify);
 
-var nodeArgs = process.argv;
+var argument = process.argv;
+
+for (var i = 2; i < argument.length; i++) {
+
+    if (i > 2 && i < argument.length) {
+        movieName = movieName + "+" + argument[i];
+    }
+    else {
+        movieName += argument[i];
+
+    }
+}
 
 movieName = "";
 artistName = "";
@@ -30,16 +41,7 @@ if (process.argv[2] === "do-what-it-says") {
 
 }
 
-for (var i = 2; i < nodeArgs.length; i++) {
 
-    if (i > 2 && i < nodeArgs.length) {
-        movieName = movieName + "+" + nodeArgs[i];
-    }
-    else {
-        movieName += nodeArgs[i];
-
-    }
-}
 
 var movieURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 var bandURL = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp";
